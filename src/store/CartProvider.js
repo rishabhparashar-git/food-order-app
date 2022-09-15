@@ -1,11 +1,12 @@
-import { useEffect, useReducer } from "react";
+import { useReducer } from "react";
 import CartContext from "./cart-context";
 
-const ACTIONS = { ADD: "ADD-ITEM", REMOVE: "REMOVE-ITEM" };
+const ACTIONS = { ADD: "ADD-ITEM", REMOVE: "REMOVE-ITEM", CLEAR: "CLEAR-CART" };
 
 const defaultCartState = { items: [], totalAmount: 0 };
 const cartReducerFunction = (previousCartState, action) => {
   switch (action.actionToDo) {
+    // -----------------------------------------------------------------------------------
     case ACTIONS.ADD:
       //  because we don't want to mutate the the previous state but to create a new state
       // so using concat as concat returns a new array
@@ -39,7 +40,7 @@ const cartReducerFunction = (previousCartState, action) => {
         items: updatedItems,
         totalAmount: updatedTotalAmount,
       };
-
+    // -----------------------------------------------------------------------------------
     case ACTIONS.REMOVE:
       let currentItems = [...previousCartState.items];
       let totalAmount = previousCartState.totalAmount;
@@ -51,15 +52,17 @@ const cartReducerFunction = (previousCartState, action) => {
             currentItems = currentItems.filter((item) => item.id !== action.id);
           }
           totalAmount = totalAmount - item.price;
-          break;
+          break; //breaking the for loop not the whole case handling
         }
       }
-
-      // below use is a cleanup function in useEffect LEARN MORE about it
       return {
         items: currentItems,
         totalAmount: totalAmount,
       };
+    // -----------------------------------------------------------------------------------
+    case ACTIONS.CLEAR:
+      return defaultCartState;
+    // -----------------------------------------------------------------------------------
   }
 };
 
@@ -74,11 +77,15 @@ export default function CartProvider(props) {
   const removeItemHandler = (id) => {
     dispatchCartState({ actionToDo: ACTIONS.REMOVE, id: id });
   };
+  const clearCartHandler = () => {
+    dispatchCartState({ actionToDo: ACTIONS.CLEAR });
+  };
   const cartContext = {
     items: cartState.items,
     totalAmount: cartState.totalAmount,
     addItem: addItemHandler,
     removeItem: removeItemHandler,
+    clearCart: clearCartHandler,
   };
   return (
     <CartContext.Provider value={cartContext}>

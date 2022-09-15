@@ -5,7 +5,10 @@
   max-height: 20rem;
   overflow: auto;
 }
-
+.paraText {
+  text-align: center;
+  font-weight: bolder;
+}
 .total {
   display: flex;
   justify-content: space-between;
@@ -43,4 +46,17 @@
 .actions .button {
   background-color: #8a2b06;
   color: white;
+}
+.button {
+  background-color: #8a2b06;
+  color: white;
+  font: inherit;
+  cursor: pointer;
+  border: 1px solid #8a2b06;
+  padding: 0.5rem 2rem;
+  border-radius: 25px;
+  margin-left: auto;
+}
+.button:hover {
+  opacity: 0.95;
 }

@@ -4,7 +4,10 @@
   margin: 2rem auto;
   animation: meals-appear 1s ease-out forwards;
 }
-
+.loadingState{
+  font-weight: bold;
+text-align: center;
+}
 .meals ul {
   list-style: none;
   margin: 0;
